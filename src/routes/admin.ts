@@ -1,6 +1,6 @@
+import { getProducts } from '@/handlers/products'
 import { Router } from 'express'
-import { getProducts } from '../handlers/products'
 
-export const adminRouter = Router()
-
-adminRouter.get('/product', getProducts)
+export default (router: Router) => {
+    router.get('/product', getProducts)
+}

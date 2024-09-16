@@ -1,7 +1,7 @@
+import { handleLogin, handleRegister } from '@/handlers/auth'
 import { Router } from 'express'
-import { handleLogin, handleRegister } from '../handlers/auth'
 
-export const authRouter = Router()
-
-authRouter.post('/login', handleLogin)
-authRouter.post('/register', handleRegister)
+export default (router: Router) => {
+    router.post('/login', handleLogin)
+    router.post('/register', handleRegister)
+}

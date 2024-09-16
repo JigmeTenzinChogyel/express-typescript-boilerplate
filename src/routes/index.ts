@@ -1,8 +1,16 @@
-import { adminRouter } from './admin'
-import { authRouter } from './auth'
-import { Express } from 'express'
+import config from '@/config'
+import { Express, Router } from 'express'
+import auth from './auth'
+import admin from './admin'
 
-export const router = (app: Express) => {
-    app.use(authRouter)
+export default (app: Express) => {
+    // routes for users
+    const router = Router()
+    auth(router)
+    app.use(config.api.prefix, router)
+
+    // routes for admin
+    const adminRouter = Router()
+    admin(adminRouter)
     app.use('/admin', adminRouter)
 }

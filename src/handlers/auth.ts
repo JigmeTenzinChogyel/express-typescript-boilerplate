@@ -1,28 +1,32 @@
 import { Request, Response } from 'express-serve-static-core'
-import {
-    UserCreateInputType,
-    UserLoginInputType,
-    UserType,
-} from '../models/user'
+import { UserLoginInputType } from '../models/user'
+import AuthService from '@/services/Auth'
+import db from '@/db'
+import { users } from '@/schema'
 
 export const handleLogin = (
     req: Request<{}, {}, UserLoginInputType>,
     res: Response<{ token: string }>
 ) => {
     const { email, password } = req.body
+    const token = AuthService.getToken('1')
+    AuthService.verifyToken(token)
     res.json({
-        token: `${email}${password}`,
+        token,
     })
 }
 
-export const handleRegister = (
-    req: Request<{}, {}, UserCreateInputType>,
-    res: Response<UserType>
+export const handleRegister = async (
+    req: Request<{}, {}, { name: string }>,
+    res: Response
 ) => {
-    const { name, email, password } = req.body
-    res.json({
-        id: 1,
-        name,
-        email,
-    })
+    const { name } = req.body
+
+    const user = await db
+        .insert(users)
+        .values({
+            name,
+        })
+        .returning({ id: users.id, name: users.name })
+    res.json(user[0])
 }

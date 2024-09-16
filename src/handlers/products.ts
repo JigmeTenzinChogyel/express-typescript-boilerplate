@@ -1,6 +1,14 @@
-import { Request, Response } from 'express-serve-static-core'
+import db from '@/db'
+import { posts } from '@/schema'
+import { Request, Response, NextFunction } from 'express-serve-static-core'
 
-export const getProducts = (req: Request, res: Response) => {
+export const getProducts = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    const products = await db.query.posts.findMany()
+    console.log(products)
     res.send({
         id: 1,
         name: 'washing machine',
