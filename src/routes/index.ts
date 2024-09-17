@@ -1,16 +1,14 @@
-import config from '@/config'
+import { handleLogin, handleRegister } from '../models/auth/handler'
 import { Express, Router } from 'express'
-import auth from './auth'
-import admin from './admin'
 
 export default (app: Express) => {
-    // routes for users
     const router = Router()
-    auth(router)
-    app.use(config.api.prefix, router)
+    app.use('/api', router)
+    router.post('/login', handleLogin)
+    router.post('/register', handleRegister)
 
     // routes for admin
     const adminRouter = Router()
-    admin(adminRouter)
     app.use('/admin', adminRouter)
+    // router.get('/product', getProducts)
 }
