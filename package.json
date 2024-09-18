@@ -1,7 +1,7 @@
 {
-    "name": "karsel-mart-backend",
+    "name": "express-typescript-boilerplate",
     "version": "1.0.0",
-    "description": "backend for karsel-mart",
+    "description": "backend boilerplate with rest express typescript drizzle",
     "main": "src/app.js",
     "author": "Jigme Tenzin Chogyel",
     "license": "MIT",
